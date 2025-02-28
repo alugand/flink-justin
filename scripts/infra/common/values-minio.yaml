@@ -1,0 +1,9 @@
+mode: standalone
+image:
+  debug: true
+accessKey: root
+secretKey: rootroot
+persistence:
+  existingClaim: pvc-manager-minio
+nodeSelector:
+  tier: manager

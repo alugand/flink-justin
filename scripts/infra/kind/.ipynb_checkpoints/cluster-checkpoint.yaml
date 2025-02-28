@@ -1,0 +1,35 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+  - role: worker
+    kubeadmConfigPatches:
+      - |
+        kind: JoinConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:
+            node-labels: "tier=manager"
+    extraMounts:
+      - hostPath: /storage/opt/local-path-provisioner
+        containerPath: /opt/local-path-provisioner
+  - role: worker
+    kubeadmConfigPatches:
+      - |
+        kind: JoinConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:
+            node-labels: "tier=jobmanager"
+  - role: worker
+    kubeadmConfigPatches:
+      - |
+        kind: JoinConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:
+            node-labels: "tier=taskmanager"
+#  - role: worker
+#    kubeadmConfigPatches:
+#      - |
+#        kind: JoinConfiguration
+#        nodeRegistration:
+#          kubeletExtraArgs:
+#            node-labels: "tier=taskmanager"

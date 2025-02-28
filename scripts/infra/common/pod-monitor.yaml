@@ -1,0 +1,29 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: flink-kubernetes-operator
+  labels:
+    release: prom
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: flink-kubernetes-operator
+  podMetricsEndpoints:
+    - port: metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: flink
+  labels:
+    release: prom
+spec:
+  namespaceSelector:
+    matchNames:
+      - default
+  selector:
+    matchLabels:
+      app: flink
+  podMetricsEndpoints:
+    - targetPort: 9249
+      interval: 5s
