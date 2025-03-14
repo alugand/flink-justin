@@ -16,12 +16,8 @@ kubectl apply -f https://github.com/spotify/flink-on-k8s-operator/releases/downl
 kubectl create namespace manager
 kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/v0.0.21/deploy/local-path-storage.yaml
 kubectl apply -f ./cm-local-path.yaml # override default directory to /tmp (caution on reboot !)
-kubectl apply -f ./pv-minio-local-path.yaml # default: uses nodes' local storage
 
 sleep 30 # sleep for 30 seconds for application of configuration in local-path
-helm repo add minio https://charts.min.io/
-helm repo update
-helm install -n manager --set resources.requests.memory=512Mi --set replicas=1 --set persistence.enabled=false --set mode=standalone --set rootUser=root,rootPassword=rootroot minio minio/minio
 
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update

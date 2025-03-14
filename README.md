@@ -1,34 +1,13 @@
 # JUSTIN
 
-## Compiling Flink
+This repository contains the code of Justin along with instructions on how to reproduce the results presented in the paper.
 
-### Requirements
-1. Java 11
-2. Maven
+The experiments were conducted on the [Grid5000]() grid but we also include instructions to run Justin in a local environment using Kind.
 
-```bash
-cd flink
-mvn  package -T 8 -DskipTests -Dspotless.check.skip=true -Drat.skip=true -Dcheckstyle.skip
-```
-
-The generated binaries are located in the dir `flink/flink-dist/target/...`.
-
-### Building the image
-
-```bash
-docker build . -t ${DOCKER_ID}/flink:justin
-docker push ${DOCKER_ID}/flink:justin
-```
-
-## Building the Flink Kubernetes Operator
-
-```bash
-docker build . -t ${DOCKER_ID}/flink-operator:justin
-docker push ${DOCKER_ID}/flink-operator:justin
-```
-
-## Deploying the Flink Kubernetes Operator
-
-```bash
-helm install flink-kubernetes-operator flink-operator-repo/flink-kubernetes-operator --set image.repository= ${DOCKER_ID}/flink-operator --set image.tag=justin -f values.yaml
-```
+## Local environment
+The simplest way to test Justin is to deploy a local cluster.
+Please read the following instructions to deploy a cluster, build the project, and run the experiments.
+1. [Requirements.ms](./Requirements.md) contains the instructions to install the required tools, namely Jupyter Notebook, Kind, Helm, and Kubectl.
+At the end of the instructions, you will also be able to build the JARs of Flink and the Flink Kubernetes Operator using Docker.
+2. Next, read the [instructions](./Deployment.md) on how to deploy a local cluster and install the required services (Prometheus, Grafana, ...).
+3. Finally, [Benchmarks.md](./Benchmarks.md) contains the instructions on how to run the motivation and macro benchmarks
