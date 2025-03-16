@@ -35,5 +35,5 @@ sleep 10 # sometimes timeout
 helm repo add cloudhut https://raw.githubusercontent.com/cloudhut/charts/master/archives
 helm repo update
 
-# ingress for minio, prom, grafana
+# ingress for prom, grafana
 kubectl apply -f ../common/ingress-localhost.yaml

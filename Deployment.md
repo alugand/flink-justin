@@ -44,7 +44,7 @@ Instead of pushing the previously built images to a public repository, we can us
 ### Deploying the Flink Kubernetes Operator
 The Flink Kubernetes Operator is responsible of creating JobManagers, TaskManagers, and deploying Flink jobs on newly spawned workers. It also holds the logic of the autoscaler.
 
-To deploy it using Helm from the root directory:
+To deploy it using Helm from the project root directory:
 ```bash
 # From the root directory
 $ helm install flink-kubernetes-operator ./flink-kubernetes-operator/helm/flink-kubernetes-operator --set image.repository=flink-kubernetes-operator --set image.tag=dais -f ./flink-kubernetes-operator/examples/autoscaling/values.yaml

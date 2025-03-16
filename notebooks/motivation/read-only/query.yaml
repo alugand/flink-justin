@@ -21,7 +21,7 @@ kind: FlinkDeployment
 metadata:
   name: flink
 spec:
-  image: DOCKER_ID/flink-justin:dais
+  image: flink-justin:dais
   flinkVersion: v1_18
   flinkConfiguration:
     job.autoscaler.enabled: "false"

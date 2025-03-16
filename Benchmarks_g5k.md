@@ -1,7 +1,7 @@
 # Running benchmarks
 
 ## Motivation benchmarks
-Open the [./notebooks/motivation/xp.ipynb](http://localhost:8888/notebooks/notebooks/motivation/xp.ipynb) notebook in your browser (make sure your jupyter server is still up and running, following the Requirements.md instruction).
+Open the [./notebooks/motivation/xp.ipynb](./notebooks/notebooks/motivation/xp.ipynb) notebook in your browser (make sure your jupyter server is still up and running, following the Requirements_g5k.md instruction).
 
 Before continuing, make sure that the Flink image name in the following file is the same as the one you used during the build phase:
 ```yaml
@@ -15,6 +15,14 @@ spec:
 1. [./notebooks/motivation/read-only/query.yaml](./notebooks/motivation/read-only/query.yaml)
 1. [./notebooks/motivation/write-only/query.yaml](./notebooks/motivation/write-only/query.yaml)
 1. [./notebooks/motivation/update/query.yaml](./notebooks/motivation/update/query.yaml)
+
+Follow the instructions in the notebook to execute the motivation benchmarks.
+
+:warning: Grid5000 only allows access to the site from the front end or with the use of a VPN. [This VPN can be easily configured through the website](https://www.grid5000.fr/w/VPN).
+With the help of ingresses, the services are available through the following ports:
+1. Flink: `node.id.site:8081`
+1. Grafana: `node.id.site:30300`
+
 
 ## Nexmark benchmarks
 Open the [./notebooks/nexmark/xp.ipynb](http://localhost:8888/notebooks/notebooks/nexmark/xp.ipynb) notebook in your browser (make sure your jupyter server is still up and running, following the Requirements.md instruction).
