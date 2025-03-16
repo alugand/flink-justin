@@ -38,7 +38,7 @@ Instead of pushing the previously built images to a public repository, we can us
  $ kind load docker-image flink-kubernetes-operator:dais
  ```
 
-:warning: If this operation seems to loop indefinitely, 
+:warning: This operation can sometimes loop indefinitely although the operation succeeded.
 
 
 ### Deploying the Flink Kubernetes Operator
