@@ -39,12 +39,16 @@ helm repo update
 kubectl apply -f ../common/ingress-localhost.yaml
 
 kubectl create namespace kafka
-helm install my-release oci://registry-1.docker.io/bitnamicharts/kafka --namespace kafka -f ./values.yaml
+helm install my-release oci://registry-1.docker.io/bitnamicharts/kafka --namespace kafka -f ./values-kafka.yaml
 
+helm repo add flink-operator-repo https://downloads.apache.org/flink/flink-kubernetes-operator-1.21.1/
+helm repo update
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
 helm install flink-kubernetes-operator flink-operator-repo/flink-kubernetes-operator
 
+helm repo add minio-operator https://operator.min.io
+helm repo update
 helm install --namespace minio-operator --create-namespace operator minio-operator/operator
-kubectl apply -f tenant-base.yaml
+kubectl apply -f ./tenant-base.yaml
 
 sleep 10
