@@ -21,10 +21,6 @@ kubectl create namespace manager
 kubectl apply -f ./pv-minio-local-path.yaml # default: uses nodes' local storage
 
 sleep 30 # sleep for 30 seconds for application of configuration in local-path
-helm repo add minio https://helm.min.io/
-helm repo update
-helm install minio minio/minio --namespace manager --version 8.0.10 -f ./values-minio.yaml
-
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
 helm install --namespace manager --version 30.0.2 prom prometheus-community/kube-prometheus-stack -f ./values-prom.yaml

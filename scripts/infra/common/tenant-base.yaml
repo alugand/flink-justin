@@ -52,6 +52,10 @@ spec:
   imagePullSecret: {}
   mountPath: /export
   podManagementPolicy: Parallel
+  buckets:
+  - name: mybucket
+    objectLock: false
+    region: us-east-1
   pools:
   - affinity:
       nodeAffinity: {}
@@ -68,7 +72,8 @@ spec:
       seccompProfile:
         type: RuntimeDefault
     name: pool-0
-    nodeSelector: {}
+    nodeSelector:
+      tier: minio
     resources: {}
     securityContext:
       fsGroup: 1000
@@ -76,7 +81,7 @@ spec:
       runAsGroup: 1000
       runAsNonRoot: true
       runAsUser: 1000
-    servers: 4
+    servers: 1
     tolerations: []
     topologySpreadConstraints: []
     volumeClaimTemplate:

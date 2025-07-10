@@ -43,6 +43,8 @@ helm install my-release oci://registry-1.docker.io/bitnamicharts/kafka --namespa
 
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
 helm install flink-kubernetes-operator flink-operator-repo/flink-kubernetes-operator
+
 helm install --namespace minio-operator --create-namespace operator minio-operator/operator
+kubectl apply -f tenant-base.yaml
 
 sleep 10
