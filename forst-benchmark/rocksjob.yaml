@@ -1,0 +1,76 @@
+apiVersion: flink.apache.org/v1beta1
+kind: FlinkDeployment
+metadata:
+  name: flink
+spec:
+  image: alugand/flink:2.0.8
+  flinkVersion: v2_0
+  flinkConfiguration:
+    state.backend.type: "rocksdb"
+    taskmanager.numberOfTaskSlots: "4"
+    execution.checkpointing.incremental: "true"
+    execution.checkpointing.externalized-checkpoint-retention: RETAIN_ON_CANCELLATION
+
+    execution.checkpointing.interval: "30s"
+    state.checkpointing.dir: "s3a://mybucket/flink-checkpoints/rocks"
+    s3.endpoint: "http://myminio-hl.minio-tenant:9000"
+    s3.path.style.access: "true"
+    s3.access-key: "minio"
+    s3.secret-key: "minio123"
+    
+    metrics.reporters: prom
+    metrics.reporter.prom.factory.class: org.apache.flink.metrics.prometheus.PrometheusReporterFactory
+    
+    web.submit.enable: "true"
+    web.cancel.enable: "true"
+
+    state.backend.rocksdb.metrics.block-cache-usage: "true"
+    state.backend.rocksdb.metrics.block-cache-hit: "true"
+    state.backend.rocksdb.metrics.block-cache-miss: "true"
+    state.backend.rocksdb.metrics.bytes-read: "true"
+    state.backend.rocksdb.metrics.bytes-written: "true"
+    state.backend.rocksdb.metrics.column-family-as-variable: "true"
+    state.backend.rocksdb.metrics.compaction-pending: "true"
+    state.backend.rocksdb.metrics.compaction-read-bytes: "true"
+    state.backend.rocksdb.metrics.compaction-write-bytes: "true"
+    state.backend.rocksdb.metrics.cur-size-active-mem-table: "true"
+    state.backend.rocksdb.metrics.cur-size-all-mem-tables: "true"
+    state.backend.rocksdb.metrics.estimate-live-data-size: "true"
+    state.backend.rocksdb.metrics.estimate-num-keys: "true"
+    state.backend.rocksdb.metrics.estimate-pending-compaction-bytes: "true"
+    state.backend.rocksdb.metrics.estimate-table-readers-mem: "true"
+    state.backend.rocksdb.metrics.live-sst-files-size: "true"
+    state.backend.rocksdb.metrics.size-all-mem-tables: "true"
+    state.backend.rocksdb.metrics.total-sst-files-size: "true"
+
+    state.backend.latency-track.keyed-state-enabled: "true"
+    state.backend.rocksdb.use-direct-writes: "true"
+    state.backend.rocksdb.use-direct-reads: "true"
+
+  serviceAccount: flink
+  podTemplate:
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: pod-template
+    spec:
+      containers:
+        # Do not change the main container name
+        - name: flink-main-container
+          ports:
+            - containerPort: 9249
+              name: prom
+  jobManager:
+    resource:
+      memory: "2048m"
+      cpu: 1
+  taskManager:
+    resource:
+      memory: "2048m"
+      cpu: 4
+  job:
+    jarURI: https://raw.githubusercontent.com/alugand/forst-benchmark/dev/target/Update.jar
+    args:
+      - "--kafka-pwd"
+      - "ICWvoUQqBs"
+    parallelism: 4
