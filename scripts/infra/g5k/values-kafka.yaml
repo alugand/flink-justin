@@ -1,5 +1,16 @@
-nodeSelector:
-  tier: kafka
+controller:
+  replicaCount: 1
+  
+  nodeSelector:
+    tier: kafka
+    
+  affinity: {}
+  podAntiAffinity:
+    preset: ""
+
+persistence:
+  storageClass: "local-path"
+
 provisioning:
   enabled: true
   topics:

@@ -33,8 +33,8 @@ helm upgrade --install loki grafana/loki-stack --namespace manager --version 2.6
 
 sleep 10 # sometimes timeout
 # Kafka
-kubectl create ns kafka
-kubectl -n kafka apply -f ../../xp/strimzi-cluster-operator-0.28.0.yaml
+#kubectl create ns kafka
+#kubectl -n kafka apply -f ../../xp/strimzi-cluster-operator-0.28.0.yaml
 
 # repo for kowl
 helm repo add cloudhut https://raw.githubusercontent.com/cloudhut/charts/master/archives
