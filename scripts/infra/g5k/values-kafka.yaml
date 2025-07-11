@@ -1,0 +1,8 @@
+nodeSelector:
+  tier: kafka
+provisioning:
+  enabled: true
+  topics:
+    - name: "event-demo"
+      partitions: 3
+      replicationFactor: 1
