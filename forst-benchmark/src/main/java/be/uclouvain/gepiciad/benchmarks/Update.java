@@ -20,20 +20,13 @@ public class Update {
         final ParameterTool pt = ParameterTool.fromArgs(args);
 
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-        String password = pt.get("kafka-pwd");
-        String jaasCfg = String.format(
-                "org.apache.kafka.common.security.scram.ScramLoginModule required username=\"user1\" password=\"%s\";",
-                password
-        );
+        
         KafkaSource<Event> source = KafkaSource.<Event>builder()
                 .setBootstrapServers("kafka-service.kafka.svc.cluster.local:9092")
                 .setTopics("event-demo")
                 .setGroupId("my-consumer-flink")
                 //.setStartingOffsets(OffsetsInitializer.latest())
                 .setDeserializer(new EventDeserializer())
-                .setProperty("security.protocol", "SASL_PLAINTEXT")
-                .setProperty("sasl.mechanism", "SCRAM-SHA-256")
-                .setProperty("sasl.jaas.config", jaasCfg)
                 .build();
 
         env.fromSource(source, WatermarkStrategy.noWatermarks(),"KafkaSource")

@@ -20,13 +20,7 @@ public class KafkaGenerator {
         Random random = new Random();
 
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-        String password = pt.get("kafka-pwd");
-        String jaasCfg = String.format(
-                "org.apache.kafka.common.security.scram.ScramLoginModule required username=\"user1\" password=\"%s\";",
-                password
-        );
-
-
+        
         int srcRate = Integer.parseInt(pt.get("src-rate","10000"));
         int payloadLength = Integer.parseInt(pt.get("payload-length","1000"));
 
@@ -49,11 +43,8 @@ public class KafkaGenerator {
                 );
 
         KafkaSink<Event> kafkaSink = KafkaSink.<Event>builder()
-                .setProperty("security.protocol", "SASL_PLAINTEXT")
-                .setProperty("sasl.mechanism", "SCRAM-SHA-256")
                 .setProperty("batch.size", "262144")
                 .setProperty("linger.ms", "50")
-                .setProperty("sasl.jaas.config", jaasCfg)
                 .setBootstrapServers("kafka-service.kafka.svc.cluster.local:9092")
                 .setRecordSerializer(KafkaRecordSerializationSchema.builder()
                         .setValueSerializationSchema(new JsonSerializationSchema<Event>())

@@ -70,8 +70,5 @@ spec:
       memory: "2048m"
       cpu: 4
   job:
-    jarURI: https://raw.githubusercontent.com/alugand/forst-benchmark/dev/target/Update.jar
-    args:
-      - "--kafka-pwd"
-      - "ICWvoUQqBs"
+    jarURI: https://raw.githubusercontent.com/alugand/flink-justin/forst-benchmark/main/target/Update.jar
     parallelism: 4

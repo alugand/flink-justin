@@ -30,10 +30,8 @@ spec:
       memory: "2048m"
       cpu: 4
   job:
-    jarURI: https://raw.githubusercontent.com/alugand/forst-benchmark/dev/target/Generator.jar
+    jarURI: https://raw.githubusercontent.com/alugand/flink-justin/forst-benchmark/main/target/Generator.jar
     args:
-      - "--kafka-pwd"
-      - "ICWvoUQqBs"
       - "--src-rate"
       - "60000"
     parallelism: 4
