@@ -94,7 +94,7 @@ spec:
         resources:
           requests:
             storage: 1Ti
-        storageClassName: standard
+        storageClassName: local-path
       status: {}
     volumesPerServer: 4
   priorityClassName: ""

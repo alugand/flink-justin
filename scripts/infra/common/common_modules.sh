@@ -39,10 +39,15 @@ helm repo update
 kubectl apply -f ../common/ingress-localhost.yaml
 
 kubectl create namespace kafka
+
+#kafka with kind cluster
 #helm install my-release oci://registry-1.docker.io/bitnamicharts/kafka --namespace kafka -f ./values-kafka.yaml
-helm repo add bitnami https://charts.bitnami.com/bitnami
-helm repo update
-helm install my-release bitnami/kafka --namespace kafka -f ./values-kafka.yaml
+#helm repo add bitnami https://charts.bitnami.com/bitnami
+#helm repo update
+#helm install my-release bitnami/kafka --namespace kafka -f ./values-kafka.yaml
+
+#kafka when using g5k
+kubectl apply -f ./kafka-deployment.yaml
 
 sleep 10
 

@@ -1,0 +1,39 @@
+apiVersion: flink.apache.org/v1beta1
+kind: FlinkDeployment
+metadata:
+  name: generator
+spec:
+  image: alugand/flink:2.0.8
+  flinkVersion: v2_0
+  flinkConfiguration:
+    state.backend.type: "rocksdb"
+    taskmanager.numberOfTaskSlots: "4"
+  serviceAccount: flink
+  podTemplate:
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: pod-template
+    spec:
+      containers:
+        # Do not change the main container name
+        - name: flink-main-container
+          ports:
+            - containerPort: 9249
+              name: prom
+  jobManager:
+    resource:
+      memory: "2048m"
+      cpu: 1
+  taskManager:
+    resource:
+      memory: "2048m"
+      cpu: 4
+  job:
+    jarURI: https://raw.githubusercontent.com/alugand/forst-benchmark/dev/target/Generator.jar
+    args:
+      - "--kafka-pwd"
+      - "ICWvoUQqBs"
+      - "--src-rate"
+      - "60000"
+    parallelism: 4
