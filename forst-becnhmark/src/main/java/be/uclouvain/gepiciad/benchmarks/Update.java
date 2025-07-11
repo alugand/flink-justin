@@ -26,7 +26,7 @@ public class Update {
                 password
         );
         KafkaSource<Event> source = KafkaSource.<Event>builder()
-                .setBootstrapServers("my-release-kafka.kafka.svc.cluster.local:9092")
+                .setBootstrapServers("kafka-service.kafka.svc.cluster.local:9092")
                 .setTopics("event-demo")
                 .setGroupId("my-consumer-flink")
                 //.setStartingOffsets(OffsetsInitializer.latest())

@@ -54,7 +54,7 @@ public class KafkaGenerator {
                 .setProperty("batch.size", "262144")
                 .setProperty("linger.ms", "50")
                 .setProperty("sasl.jaas.config", jaasCfg)
-                .setBootstrapServers("my-release-kafka.kafka.svc.cluster.local:9092")
+                .setBootstrapServers("kafka-service.kafka.svc.cluster.local:9092")
                 .setRecordSerializer(KafkaRecordSerializationSchema.builder()
                         .setValueSerializationSchema(new JsonSerializationSchema<Event>())
                         .setTopic("event-demo")
