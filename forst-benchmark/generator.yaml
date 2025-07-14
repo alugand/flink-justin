@@ -25,12 +25,20 @@ spec:
     resource:
       memory: "2048m"
       cpu: 1
+    podTemplate:
+      spec:
+        nodeSelector:
+          tier: manager
   taskManager:
     resource:
       memory: "2048m"
       cpu: 4
+    podTemplate:
+      spec:
+        nodeSelector:
+          tier: taskmanager
   job:
-    jarURI: https://raw.githubusercontent.com/alugand/flink-justin/forst-benchmark/main/target/Generator.jar
+    jarURI: https://raw.githubusercontent.com/alugand/flink-justin/main/forst-benchmark/target/Generator.jar
     args:
       - "--src-rate"
       - "60000"

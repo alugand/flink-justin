@@ -54,7 +54,7 @@ sleep 10
 helm repo add flink-operator-repo https://downloads.apache.org/flink/flink-kubernetes-operator-1.12.1/
 helm repo update
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
-helm install flink-kubernetes-operator flink-operator-repo/flink-kubernetes-operator
+helm install flink-kubernetes-operator flink-operator-repo/flink-kubernetes-operator --set nodeSelector.tier="manager"
 
 sleep 10
 

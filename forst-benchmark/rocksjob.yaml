@@ -8,11 +8,13 @@ spec:
   flinkConfiguration:
     state.backend.type: "rocksdb"
     taskmanager.numberOfTaskSlots: "4"
+
+    execution.checkpointing.storage: "filesystem"
     execution.checkpointing.incremental: "true"
     execution.checkpointing.externalized-checkpoint-retention: RETAIN_ON_CANCELLATION
 
     execution.checkpointing.interval: "30s"
-    state.checkpointing.dir: "s3a://mybucket/flink-checkpoints/rocks"
+    execution.checkpointing.dir: "s3a://mybucket/flink-checkpoints/rocks"
     s3.endpoint: "http://myminio-hl.minio-tenant:9000"
     s3.path.style.access: "true"
     s3.access-key: "minio"
@@ -64,10 +66,18 @@ spec:
     resource:
       memory: "2048m"
       cpu: 1
+    podTemplate:
+      spec:
+        nodeSelector:
+          tier: manager
   taskManager:
     resource:
       memory: "2048m"
       cpu: 4
+    podTemplate:
+      spec:
+        nodeSelector:
+          tier: taskmanager
   job:
-    jarURI: https://raw.githubusercontent.com/alugand/flink-justin/forst-benchmark/main/target/Update.jar
+    jarURI: https://raw.githubusercontent.com/alugand/flink-justin/main/forst-benchmark/target/Update.jar
     parallelism: 4
