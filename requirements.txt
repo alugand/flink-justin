@@ -1,0 +1,4 @@
+notebook
+prometheus-panda
+requests
+matplotlib
