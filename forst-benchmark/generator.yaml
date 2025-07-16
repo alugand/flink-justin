@@ -16,7 +16,6 @@ spec:
       name: pod-template
     spec:
       containers:
-        # Do not change the main container name
         - name: flink-main-container
           ports:
             - containerPort: 9249
@@ -28,7 +27,7 @@ spec:
     podTemplate:
       spec:
         nodeSelector:
-          tier: manager
+          tier: kafka
   taskManager:
     resource:
       memory: "2048m"
@@ -36,10 +35,10 @@ spec:
     podTemplate:
       spec:
         nodeSelector:
-          tier: taskmanager
+          tier: kafka
   job:
     jarURI: https://raw.githubusercontent.com/alugand/flink-justin/main/forst-benchmark/target/Generator.jar
     args:
       - "--src-rate"
-      - "60000"
+      - "50000"
     parallelism: 4
