@@ -35,3 +35,4 @@ spec:
   - port: 9000
     path: /minio/v2/metrics/cluster
     interval: 5s
+    scheme: http

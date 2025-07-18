@@ -8,6 +8,8 @@ kind: Secret
 metadata:
   name: storage-configuration
   namespace: minio-tenant
+  labels: 
+    app: minio
 stringData:
   config.env: |-
     export MINIO_ROOT_USER="minio"
