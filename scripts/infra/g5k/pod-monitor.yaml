@@ -16,3 +16,22 @@ spec:
   podMetricsEndpoints:
     - port: prom
       interval: 5s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: minio-pod-monitor
+  namespace: manager
+  labels:
+    release: prom
+spec:
+  namespaceSelector:
+    matchNames:
+      - minio-tenant
+  selector:
+    matchLabels:
+      app: minio
+  podMetricsEndpoints:
+  - port: 9000
+    path: /minio/v2/metrics/cluster
+    interval: 5s
