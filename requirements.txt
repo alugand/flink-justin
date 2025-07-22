@@ -2,3 +2,4 @@ notebook
 prometheus-pandas
 requests
 matplotlib
+apache-flink

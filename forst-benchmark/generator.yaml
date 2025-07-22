@@ -3,7 +3,7 @@ kind: FlinkDeployment
 metadata:
   name: generator
 spec:
-  image: alugand/flink:2.0.8
+  image: alugand/flinkforst:latest
   flinkVersion: v2_0
   flinkConfiguration:
     state.backend.type: "rocksdb"
