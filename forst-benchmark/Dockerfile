@@ -10,8 +10,3 @@ COPY target/Read.jar /opt/flink/usrlib/Read.jar
 COPY target/Update.jar /opt/flink/usrlib/Update.jar
 COPY target/WriteOnly.jar /opt/flink/usrlib/WriteOnly.jar
 COPY target/Generator.jar /opt/flink/usrlib/Generator.jar
-COPY flink-sql-connector-kafka-4.0.0-2.0.jar /opt/flink/lib/
-
-
-
-

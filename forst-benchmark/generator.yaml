@@ -3,23 +3,12 @@ kind: FlinkDeployment
 metadata:
   name: generator
 spec:
-  image: alugand/flinkforst:latest
+  image: alugand/flinkforst:1.0.0
   flinkVersion: v2_0
   flinkConfiguration:
     state.backend.type: "rocksdb"
     taskmanager.numberOfTaskSlots: "4"
   serviceAccount: flink
-  podTemplate:
-    apiVersion: v1
-    kind: Pod
-    metadata:
-      name: pod-template
-    spec:
-      containers:
-        - name: flink-main-container
-          ports:
-            - containerPort: 9249
-              name: prom
   jobManager:
     resource:
       memory: "2048m"

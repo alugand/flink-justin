@@ -4,7 +4,7 @@ kind: FlinkDeployment
 metadata:
   name: flink
 spec:
-  image: alugand/flinkforst:latest
+  image: alugand/flinkforst:1.0.0
   flinkVersion: v2_0
   flinkConfiguration:
 
@@ -13,7 +13,12 @@ spec:
 
     #state.backend.forst.cache.size-based-limit: "0"
     #state.backend.forst.cache.reserve-size: "0"
+    
+    #state.backend.forst.cache.size-based-limit: "0"
+    #state.backend.forst.cache.reserve-size: "0"
 
+    taskmanager.memory.managed.size: "128m"
+    state.backend.forst.memory.managed: "true"
     execution.checkpointing.incremental: "true"
     execution.checkpointing.interval: "30s"
     execution.checkpointing.dir: "s3a://mybucket/flink-checkpoints/forst"
