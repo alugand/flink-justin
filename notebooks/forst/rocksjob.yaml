@@ -79,5 +79,5 @@ spec:
         nodeSelector:
           tier: taskmanager
   job:
-    jarURI: https://raw.githubusercontent.com/alugand/flink-justin/main/forst-benchmark/target/Update.jar
+    jarURI: https://raw.githubusercontent.com/alugand/flink-justin/main/benchmarks/forst-benchmark/target/Update.jar
     parallelism: 4

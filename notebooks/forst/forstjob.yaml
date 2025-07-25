@@ -13,12 +13,9 @@ spec:
 
     #state.backend.forst.cache.size-based-limit: "0"
     #state.backend.forst.cache.reserve-size: "0"
-    
-    #state.backend.forst.cache.size-based-limit: "0"
-    #state.backend.forst.cache.reserve-size: "0"
-
     taskmanager.memory.managed.size: "128m"
     state.backend.forst.memory.managed: "true"
+    
     execution.checkpointing.incremental: "true"
     execution.checkpointing.interval: "30s"
     execution.checkpointing.dir: "s3a://mybucket/flink-checkpoints/forst"
@@ -83,5 +80,5 @@ spec:
         nodeSelector:
           tier: taskmanager
   job:
-    jarURI: https://raw.githubusercontent.com/alugand/flink-justin/main/forst-benchmark/target/Update.jar
+    jarURI: https://raw.githubusercontent.com/alugand/flink-justin/main/benchmarks/forst-benchmark/target/Update.jar
     parallelism: 4
