@@ -3,5 +3,5 @@ provisioning:
   enabled: true
   topics:
     - name: "event-demo"
-      partitions: 3
+      partitions: 4
       replicationFactor: 1

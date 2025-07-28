@@ -45,7 +45,7 @@ spec:
         - name: KAFKA_CFG_INTER_BROKER_LISTENER_NAME
           value: "CLIENT"
         - name: KAFKA_CREATE_TOPICS
-          value: "event-demo:3:1,result:3:1"
+          value: "event-demo:4:1,result:4:1"
         volumeMounts:
         - name: kafka-data
           mountPath: /bitnami/kafka
