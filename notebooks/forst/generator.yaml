@@ -29,5 +29,5 @@ spec:
     jarURI: https://raw.githubusercontent.com/alugand/flink-justin/main/benchmarks/forst-benchmark/target/Generator.jar
     args:
       - "--src-rate"
-      - "50000"
+      - "1000"
     parallelism: 4
