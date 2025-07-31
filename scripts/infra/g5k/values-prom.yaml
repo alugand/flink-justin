@@ -5,6 +5,13 @@ prometheus:
   prometheusSpec:
     nodeSelector:
       tier: manager
+    additionalScrapeConfigs:
+      - job_name: 'minio-job'
+        bearer_token: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJwcm9tZXRoZXVzIiwic3ViIjoibWluaW8iLCJleHAiOjQ5MDc1NTU1NDR9.MeNHW0yKSctQv9iTn6L2PpoJI20CSxt1IBvK4XFI6ustIf_t5eROnQcdhSzClECzBkv1UHyXtFIVAQorJsHCGA
+        metrics_path: /minio/v2/metrics/cluster
+        scheme: http
+        static_configs:
+          - targets: ['myminio.minio-tenant.svc.cluster.local:9000']
 grafana:
   service:
     type: NodePort
@@ -14,3 +21,4 @@ grafana:
 kube-state-metrics:
   nodeSelector:
     tier: manager
+
