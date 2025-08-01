@@ -2,6 +2,8 @@
 
 export PATH=$HOME/tools:$PATH # for grid5k
 
+kubectl apply -f minio-secret.yaml
+
 # give full rights to pod running in default (bad practice, but ok in our experimentation case)
 kubectl apply -f ./cluster-role-binding-default.yaml
 

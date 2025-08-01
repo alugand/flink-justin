@@ -16,3 +16,25 @@ spec:
   podMetricsEndpoints:
     - port: prom
       interval: 5s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: minio-servicemonitor
+  namespace: minio-tenant
+  labels:
+    release: prom
+spec:
+  selector:
+    matchLabels:
+      app: minio
+  namespaceSelector:
+    matchNames:
+    - minio-tenant
+  endpoints:
+  - port: service
+    path: /minio/v2/metrics/cluster
+    scheme: http
+    bearerTokenSecret:
+      name: minio-prometheus-token
+      key: token
