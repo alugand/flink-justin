@@ -7,9 +7,8 @@ prometheus:
       tier: manager
     serviceMonitorSelector: {}
     serviceMonitorNamespaceSelector:
-      matchNames:
-      - manager
-      - minio-tenant
+      matchLabels:
+        prometheus-monitor: "true"
 grafana:
   service:
     type: NodePort

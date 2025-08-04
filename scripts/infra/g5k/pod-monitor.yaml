@@ -38,9 +38,6 @@ spec:
       name: minio-prometheus-token
       key: token
     relabelings:
-    - sourceLabels: [__meta_kubernetes_service_name]
-      action: keep
-      regex: myminio-hl
     - sourceLabels: [__meta_kubernetes_pod_name]
       targetLabel: instance
   - port: http-minio
@@ -51,9 +48,6 @@ spec:
       name: minio-prometheus-token
       key: token
     relabelings:
-    - sourceLabels: [__meta_kubernetes_service_name]
-      action: keep
-      regex: myminio-hl
     - sourceLabels: [__meta_kubernetes_pod_name]
       targetLabel: instance
   - port: http-minio
@@ -64,9 +58,6 @@ spec:
       name: minio-prometheus-token
       key: token
     relabelings:
-    - sourceLabels: [__meta_kubernetes_service_name]
-      action: keep
-      regex: myminio-hl
     - sourceLabels: [__meta_kubernetes_pod_name]
       targetLabel: instance
   - port: http-minio
@@ -77,8 +68,5 @@ spec:
       name: minio-prometheus-token
       key: token
     relabelings:
-    - sourceLabels: [__meta_kubernetes_service_name]
-      action: keep
-      regex: myminio-hl
     - sourceLabels: [__meta_kubernetes_pod_name]
       targetLabel: instance
