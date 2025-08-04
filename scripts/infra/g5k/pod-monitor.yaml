@@ -2,7 +2,6 @@ apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: flink-pod-monitor
-  # Attach labels configured in prometheus.prometheusSpec.podMonitorSelector
   labels:
     release: prom
 spec:
@@ -12,7 +11,6 @@ spec:
   selector:
     matchLabels:
       app: flink
-  # Specify the port name of the exposed metric port
   podMetricsEndpoints:
     - port: prom
       interval: 5s
@@ -27,14 +25,60 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: minio
+      v1.min.io/tenant: myminio
   namespaceSelector:
     matchNames:
     - minio-tenant
   endpoints:
-  - port: service
+  - port: http-minio
     path: /minio/v2/metrics/cluster
     scheme: http
+    interval: 5s
     bearerTokenSecret:
       name: minio-prometheus-token
       key: token
+    relabelings:
+    - sourceLabels: [__meta_kubernetes_service_name]
+      action: keep
+      regex: myminio-hl
+    - sourceLabels: [__meta_kubernetes_pod_name]
+      targetLabel: instance
+  - port: http-minio
+    path: /minio/v2/metrics/bucket
+    scheme: http
+    interval: 5s
+    bearerTokenSecret:
+      name: minio-prometheus-token
+      key: token
+    relabelings:
+    - sourceLabels: [__meta_kubernetes_service_name]
+      action: keep
+      regex: myminio-hl
+    - sourceLabels: [__meta_kubernetes_pod_name]
+      targetLabel: instance
+  - port: http-minio
+    path: /minio/v2/metrics/node
+    scheme: http
+    interval: 5s
+    bearerTokenSecret:
+      name: minio-prometheus-token
+      key: token
+    relabelings:
+    - sourceLabels: [__meta_kubernetes_service_name]
+      action: keep
+      regex: myminio-hl
+    - sourceLabels: [__meta_kubernetes_pod_name]
+      targetLabel: instance
+  - port: http-minio
+    path: /minio/v2/metrics/resource
+    scheme: http
+    interval: 5s
+    bearerTokenSecret:
+      name: minio-prometheus-token
+      key: token
+    relabelings:
+    - sourceLabels: [__meta_kubernetes_service_name]
+      action: keep
+      regex: myminio-hl
+    - sourceLabels: [__meta_kubernetes_pod_name]
+      targetLabel: instance

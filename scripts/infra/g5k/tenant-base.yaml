@@ -40,6 +40,7 @@ metadata:
   name: myminio
   namespace: minio-tenant
 spec:
+  
   certConfig: {}
   configuration:
     name: storage-configuration
@@ -103,10 +104,8 @@ spec:
   requestAutoCert: false
   serviceAccountName: ""
   serviceMetadata:
-    consoleServiceAnnotations: {}
-    consoleServiceLabels: {}
-    minioServiceAnnotations: {}
-    minioServiceLabels: {}
+    minioServiceLabels:
+      v1.min.io/tenant: myminio
   subPath: ""
   users:
   - name: storage-user

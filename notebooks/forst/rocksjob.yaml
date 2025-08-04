@@ -15,6 +15,7 @@ spec:
 
     execution.checkpointing.interval: "30s"
     execution.checkpointing.dir: "s3a://mybucket/flink-checkpoints/rocks"
+    
     s3.endpoint: "http://myminio-hl.minio-tenant:9000"
     s3.path.style.access: "true"
     s3.access-key: "minio"
@@ -25,6 +26,10 @@ spec:
     
     web.submit.enable: "true"
     web.cancel.enable: "true"
+
+    table.exec.async-state.enabled: "true"
+    table.exec.mini-batch.enabled: false
+    table.optimizer.agg-phase-strategy: ONE_PHASE
 
     state.backend.rocksdb.metrics.block-cache-usage: "true"
     state.backend.rocksdb.metrics.block-cache-hit: "true"
@@ -46,8 +51,6 @@ spec:
     state.backend.rocksdb.metrics.total-sst-files-size: "true"
 
     state.backend.latency-track.keyed-state-enabled: "true"
-    state.backend.rocksdb.use-direct-writes: "true"
-    state.backend.rocksdb.use-direct-reads: "true"
 
   serviceAccount: flink
   podTemplate:

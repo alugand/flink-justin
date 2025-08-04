@@ -2,7 +2,6 @@
 
 export PATH=$HOME/tools:$PATH # for grid5k
 
-kubectl apply -f minio-secret.yaml
 
 # give full rights to pod running in default (bad practice, but ok in our experimentation case)
 kubectl apply -f ./cluster-role-binding-default.yaml
@@ -18,14 +17,6 @@ kubectl apply -f https://github.com/spotify/flink-on-k8s-operator/releases/downl
 kubectl create namespace manager
 kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/v0.0.21/deploy/local-path-storage.yaml
 kubectl apply -f ./cm-local-path.yaml # override default directory to /tmp (caution on reboot !)
-
-sleep 30 # sleep for 30 seconds for application of configuration in local-path
-
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm repo update
-helm install --namespace manager --version 30.0.2 prom prometheus-community/kube-prometheus-stack -f ./values-prom.yaml
-
-kubectl apply -f pod-monitor.yaml
 
 helm repo add grafana https://grafana.github.io/helm-charts
 helm repo update
@@ -64,5 +55,14 @@ helm repo add minio-operator https://operator.min.io
 helm repo update
 helm install --namespace minio-operator --create-namespace operator minio-operator/operator
 kubectl apply -f ./tenant-base.yaml
+kubectl apply -f ./minio-secret.yaml
 
-sleep 10
+sleep 30 # sleep for 30 seconds for application of configuration in local-path
+
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+helm install --namespace manager --version 30.0.2 prom prometheus-community/kube-prometheus-stack -f ./values-prom.yaml
+
+kubectl apply -f pod-monitor.yaml
+
+#kubectl label service -n minio-tenant myminio-hl metrics=true

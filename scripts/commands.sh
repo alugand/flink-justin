@@ -17,3 +17,5 @@ kafka-topics.sh --bootstrap-server kafka-service.kafka.svc.cluster.local:9092 --
 kafka-topics.sh --bootstrap-server kafka-service.kafka.svc.cluster.local:9092 --describe --topic event-demo
 kafka-configs.sh --bootstrap-server localhost:9092 --alter --topic event-demo --add-config retention.ms=1000
 kafka-configs.sh --bootstrap-server localhost:9092 --alter --topic event-demo --delete-config retention.ms
+
+kubectl port-forward svc/myminio-console 9090 -n minio-tenant

@@ -11,14 +11,20 @@ spec:
     taskmanager.numberOfTaskSlots: "4"
     state.backend.type: forst
 
-    #state.backend.forst.cache.size-based-limit: "0"
+    state.backend.forst.cache.size-based-limit: "1g"
     #state.backend.forst.cache.reserve-size: "0"
     taskmanager.memory.managed.size: "128m"
     state.backend.forst.memory.managed: "true"
-    
+
+    table.exec.async-state.enabled: "true"
+    table.exec.mini-batch.enabled: false
+    table.optimizer.agg-phase-strategy: ONE_PHASE
+    state.backend.forst.sync.enforce-local: false
     execution.checkpointing.incremental: "true"
-    execution.checkpointing.interval: "30s"
+    execution.checkpointing.interval: "60s"
     execution.checkpointing.dir: "s3a://mybucket/flink-checkpoints/forst"
+    #state.backend.forst.primary-dir: "s3a://mybucket/forstdb"
+
     s3.endpoint: "http://myminio-hl.minio-tenant:9000"
     s3.path.style.access: "true"
     s3.access-key: "minio"
@@ -48,8 +54,6 @@ spec:
     state.backend.forst.metrics.total-sst-files-size: "true"
 
     state.backend.latency-track.keyed-state-enabled: "true"
-    state.backend.forst.use-direct-writes: "true"
-    state.backend.forst.use-direct-reads: "true"
   serviceAccount: flink
   podTemplate:
     apiVersion: v1
