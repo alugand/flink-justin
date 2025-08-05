@@ -22,11 +22,11 @@ public class KafkaGenerator {
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         
         int srcRate = Integer.parseInt(pt.get("src-rate","10000"));
-        int payloadLength = Integer.parseInt(pt.get("payload-length","1000"));
+        int payloadLength = Integer.parseInt(pt.get("payload-length","1024"));
 
 
         GeneratorFunction<Long, Event> generatorFunction = i -> {
-            int key = random.nextInt(100000);
+            int key = random.nextInt(Integer.parseInt(pt.get("key-space","100000")));
             long eventTime = Instant.now().toEpochMilli();
             i++;
             String payload = StringUtils.getRandomString(

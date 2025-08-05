@@ -2,4 +2,4 @@ notebook
 prometheus-pandas
 requests
 matplotlib
-apache-flink
+apache-flink==2.0.0

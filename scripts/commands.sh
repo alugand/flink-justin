@@ -19,3 +19,5 @@ kafka-configs.sh --bootstrap-server localhost:9092 --alter --topic event-demo --
 kafka-configs.sh --bootstrap-server localhost:9092 --alter --topic event-demo --delete-config retention.ms
 
 kubectl port-forward svc/myminio-console 9090 -n minio-tenant
+
+#minio_cluster_usage_total_bytes{}

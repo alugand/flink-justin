@@ -234,6 +234,22 @@ under the License.
 						</configuration>
 					</execution>
 					<execution>
+						<id>LargeStatev2</id>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<finalName>LargeStatev2</finalName>
+							<transformers>
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>be.uclouvain.gepiciad.benchmarks.LargeStatev2</mainClass>
+								</transformer>
+							</transformers>
+						</configuration>
+					</execution>
+					<execution>
 						<id>Generator</id>
 						<phase>package</phase>
 						<goals>
