@@ -1,12 +1,14 @@
 package be.uclouvain.gepiciad.sources;
 
 import java.util.Objects;
+import java.util.Random;
 
 public class Event {
     private int key;
     private long eventTime;
     private long sequenceNumber;
     private String payload;
+    private long bid;
 
     public Event() {
     }
@@ -16,6 +18,7 @@ public class Event {
         this.eventTime = eventTime;
         this.sequenceNumber = sequenceNumber;
         this.payload = payload;
+        this.bid = new Random().nextInt(100);
     }
 
     public int getKey() {
@@ -28,6 +31,10 @@ public class Event {
 
     public long getSequenceNumber() {
         return sequenceNumber;
+    }
+
+    public long getBid() {
+        return bid;
     }
 
     public String getPayload() {
