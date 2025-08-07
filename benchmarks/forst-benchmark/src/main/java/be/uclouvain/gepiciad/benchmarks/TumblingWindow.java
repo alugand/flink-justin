@@ -7,35 +7,17 @@ import org.apache.flink.api.common.functions.AggregateFunction;
 import org.apache.flink.connector.kafka.source.KafkaSource;
 import org.apache.flink.connector.kafka.source.enumerator.initializer.OffsetsInitializer;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.api.functions.sink.v2.DiscardingSink;
 import org.apache.flink.streaming.api.windowing.assigners.TumblingProcessingTimeWindows;
+import org.apache.flink.util.ParameterTool;
+
 import java.time.Duration;
 
 public class TumblingWindow {
 
-    public static class HighestBidAggregator implements AggregateFunction<Event, Long, Long> {
-        @Override
-        public Long createAccumulator() {
-            return -1L;
-        }
-
-        @Override
-        public Long add(Event event, Long accumulator) {
-            return Math.max(accumulator, event.getBid());
-        }
-
-        @Override
-        public Long getResult(Long accumulator) {
-            return accumulator;
-        }
-
-        @Override
-        public Long merge(Long a, Long b) {
-            return Math.max(a, b);
-        }
-    }
-
     public static void main(String[] args) throws Exception {
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        final ParameterTool pt = ParameterTool.fromArgs(args);
 
         KafkaSource<Event> kafkaSource = KafkaSource.<Event>builder()
                 .setBootstrapServers("kafka-service.kafka.svc.cluster.local:9092")
@@ -48,10 +30,29 @@ public class TumblingWindow {
         env.fromSource(kafkaSource, WatermarkStrategy.noWatermarks(), "Kafka Source")
                 .keyBy(Event::getKey)
                 .enableAsyncState()
-                .window(TumblingProcessingTimeWindows.of(Duration.ofSeconds(10)))
+                .window(TumblingProcessingTimeWindows.of(Duration.ofSeconds(Integer.parseInt(pt.get("window","10")))))
                 .aggregate(new HighestBidAggregator())
-                .print();
-
+                .sinkTo(new DiscardingSink<>());
         env.execute("Highest Bid Job");
     }
+
+    public static class HighestBidAggregator implements AggregateFunction<Event, Long, Long> {
+        @Override
+        public Long createAccumulator() {
+            return -1L;
+        }
+        @Override
+        public Long add(Event event, Long accumulator) {
+            return Math.max(accumulator, event.getBid());
+        }
+        @Override
+        public Long getResult(Long accumulator) {
+            return accumulator;
+        }
+        @Override
+        public Long merge(Long a, Long b) {
+            return Math.max(a, b);
+        }
+    }
+
 }

@@ -43,8 +43,8 @@ public class KafkaGenerator {
                 );
 
         KafkaSink<Event> kafkaSink = KafkaSink.<Event>builder()
-                .setProperty("batch.size", "262144")
-                .setProperty("linger.ms", "50")
+                .setProperty("batch.size", "1048576")
+                .setProperty("linger.ms", "100")
                 .setBootstrapServers("kafka-service.kafka.svc.cluster.local:9092")
                 .setRecordSerializer(KafkaRecordSerializationSchema.builder()
                         .setValueSerializationSchema(new JsonSerializationSchema<Event>())

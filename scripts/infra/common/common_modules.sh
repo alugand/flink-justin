@@ -18,6 +18,10 @@ kubectl create namespace manager
 kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/v0.0.21/deploy/local-path-storage.yaml
 kubectl apply -f ./cm-local-path.yaml # override default directory to /tmp (caution on reboot !)
 
+kubectl rollout restart daemonset/local-path-provisioner -n local-path-storage
+sleep 5
+kubectl rollout status daemonset/local-path-provisioner -n local-path-storage
+
 helm repo add grafana https://grafana.github.io/helm-charts
 helm repo update
 helm upgrade --install loki grafana/loki-stack --namespace manager --version 2.6.0 -f ./values-loki.yaml
