@@ -9,7 +9,7 @@
       "pluginName": "Prometheus"
     }
   ],
-  "__elements": {},
+  "__elements": [],
   "__requires": [
     {
       "type": "panel",
@@ -18,16 +18,10 @@
       "version": ""
     },
     {
-      "type": "panel",
-      "id": "gauge",
-      "name": "Gauge",
-      "version": ""
-    },
-    {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "10.0.2"
+      "version": "8.3.3"
     },
     {
       "type": "panel",
@@ -40,18 +34,6 @@
       "id": "prometheus",
       "name": "Prometheus",
       "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "stat",
-      "name": "Stat",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "timeseries",
-      "name": "Time series",
-      "version": ""
     }
   ],
   "annotations": {
@@ -66,6 +48,12 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
@@ -76,6 +64,7 @@
   "gnetId": 19237,
   "graphTooltip": 0,
   "id": null,
+  "iteration": 1754645078103,
   "links": [
     {
       "icon": "external link",
@@ -137,7 +126,7 @@
         "text": {},
         "valueMode": "color"
       },
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "datasource": {
@@ -207,7 +196,7 @@
         "text": {},
         "valueMode": "color"
       },
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "datasource": {
@@ -230,74 +219,184 @@
       "type": "bargauge"
     },
     {
+      "aliasColors": {
+        "S3 Errors": "light-red",
+        "S3 Requests": "light-green"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
       "datasource": {
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "semi-dark-red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
+      "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 6,
-        "w": 12,
+        "w": 6,
         "x": 0,
         "y": 6
       },
-      "id": 59,
-      "links": [],
-      "options": {
-        "displayMode": "basic",
-        "minVizHeight": 10,
-        "minVizWidth": 0,
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showUnfilled": false,
-        "text": {},
-        "valueMode": "color"
+      "hiddenSeries": false,
+      "id": 62,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
       },
-      "pluginVersion": "10.0.2",
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.3.3",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (bucket,le,api) (minio_bucket_requests_ttfb_seconds_distribution{job=\"$scrape_jobs\"})",
-          "format": "time_series",
-          "instant": false,
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "{{bucket,le,api}}",
-          "refId": "A",
-          "step": 300
+          "expr": "sum by (bucket,api) (increase(minio_bucket_requests_total{job=\"$scrape_jobs\"}[$__rate_interval]))",
+          "interval": "1m",
+          "intervalFactor": 2,
+          "legendFormat": "{{bucket,api}}",
+          "refId": "A"
         }
       ],
-      "title": "TTFB Distribution",
-      "type": "bargauge"
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Total Requests Rate",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:331",
+          "format": "none",
+          "logBase": 1,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:332",
+          "format": "short",
+          "logBase": 1,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {
+        "Replication Errors": "light-red",
+        "Replication Requests": "light-green"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 6,
+        "y": 6
+      },
+      "hiddenSeries": false,
+      "id": 63,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.3.3",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "exemplar": true,
+          "expr": "sum by (bucket) (rate(minio_bucket_traffic_received_bytes{job=\"$scrape_jobs\"}[$__rate_interval]))",
+          "interval": "1m",
+          "intervalFactor": 2,
+          "legendFormat": "Data Sent [{{bucket}}]",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Total Data Received Rate",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:331",
+          "format": "bytes",
+          "logBase": 1,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:332",
+          "format": "short",
+          "logBase": 1,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
     },
     {
       "aliasColors": {
@@ -337,7 +436,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -429,7 +528,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -504,7 +603,7 @@
         "y": 12
       },
       "hiddenSeries": false,
-      "id": 62,
+      "id": 66,
       "legend": {
         "avg": false,
         "current": false,
@@ -521,7 +620,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -536,16 +635,16 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": true,
-          "expr": "sum by (bucket,api) (increase(minio_bucket_requests_total{job=\"$scrape_jobs\"}[$__rate_interval]))",
+          "expr": "sum by (bucket) (increase(minio_bucket_usage_version_total{job=\"$scrape_jobs\"}[$__rate_interval]))",
           "interval": "1m",
           "intervalFactor": 2,
-          "legendFormat": "{{bucket,api}}",
+          "legendFormat": "{{bucket}}",
           "refId": "A"
         }
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "Total Requests Rate",
+      "title": "Versions Increase Rate",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -577,8 +676,8 @@
     },
     {
       "aliasColors": {
-        "Replication Errors": "light-red",
-        "Replication Requests": "light-green"
+        "S3 Errors": "light-red",
+        "S3 Requests": "light-green"
       },
       "bars": false,
       "dashLength": 10,
@@ -596,7 +695,7 @@
         "y": 12
       },
       "hiddenSeries": false,
-      "id": 63,
+      "id": 67,
       "legend": {
         "avg": false,
         "current": false,
@@ -613,7 +712,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -628,16 +727,16 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": true,
-          "expr": "sum by (bucket) (rate(minio_bucket_traffic_sent_bytes{job=\"$scrape_jobs\"}[$__rate_interval]))",
+          "expr": "sum by (bucket) (increase(minio_bucket_usage_deletemarker_total{job=\"$scrape_jobs\"}[$__rate_interval]))",
           "interval": "1m",
           "intervalFactor": 2,
-          "legendFormat": "Data Sent [{{bucket}}]",
+          "legendFormat": "{{bucket}}",
           "refId": "A"
         }
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "Total Data Sent Rate",
+      "title": "Delete Markers Increase Rate",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -652,7 +751,7 @@
       "yaxes": [
         {
           "$$hashKey": "object:331",
-          "format": "bytes",
+          "format": "none",
           "logBase": 1,
           "show": true
         },
@@ -705,7 +804,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -797,7 +896,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -853,8 +952,8 @@
     },
     {
       "aliasColors": {
-        "S3 Errors": "light-red",
-        "S3 Requests": "light-green"
+        "Replication Errors": "light-red",
+        "Replication Requests": "light-green"
       },
       "bars": false,
       "dashLength": 10,
@@ -872,7 +971,7 @@
         "y": 18
       },
       "hiddenSeries": false,
-      "id": 66,
+      "id": 54,
       "legend": {
         "avg": false,
         "current": false,
@@ -889,7 +988,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -904,16 +1003,16 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": true,
-          "expr": "sum by (bucket) (increase(minio_bucket_usage_version_total{job=\"$scrape_jobs\"}[$__rate_interval]))",
+          "expr": "sum by (bucket) (minio_bucket_replication_received_bytes{job=\"$scrape_jobs\"})",
           "interval": "1m",
           "intervalFactor": 2,
-          "legendFormat": "{{bucket}}",
+          "legendFormat": "Data Received [{{bucket}}]",
           "refId": "A"
         }
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "Versions Increase Rate",
+      "title": "Replication Data Received",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -928,7 +1027,7 @@
       "yaxes": [
         {
           "$$hashKey": "object:331",
-          "format": "none",
+          "format": "bytes",
           "logBase": 1,
           "show": true
         },
@@ -945,8 +1044,8 @@
     },
     {
       "aliasColors": {
-        "S3 Errors": "light-red",
-        "S3 Requests": "light-green"
+        "Replication Errors": "light-red",
+        "Replication Requests": "light-green"
       },
       "bars": false,
       "dashLength": 10,
@@ -964,7 +1063,7 @@
         "y": 18
       },
       "hiddenSeries": false,
-      "id": 67,
+      "id": 55,
       "legend": {
         "avg": false,
         "current": false,
@@ -981,7 +1080,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -996,16 +1095,16 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": true,
-          "expr": "sum by (bucket) (increase(minio_bucket_usage_deletemarker_total{job=\"$scrape_jobs\"}[$__rate_interval]))",
+          "expr": "sum by (bucket) (minio_bucket_replication_sent_bytes{job=\"$scrape_jobs\"})",
           "interval": "1m",
           "intervalFactor": 2,
-          "legendFormat": "{{bucket}}",
+          "legendFormat": "Replication Data Sent [{{bucket}}]",
           "refId": "A"
         }
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "Delete Markers Increase Rate",
+      "title": "Replication Data Sent",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -1020,7 +1119,7 @@
       "yaxes": [
         {
           "$$hashKey": "object:331",
-          "format": "none",
+          "format": "bytes",
           "logBase": 1,
           "show": true
         },
@@ -1036,12 +1135,13 @@
       }
     },
     {
+      "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "Prometheus"
+        "uid": "${DS_PROMETHEUS}"
       },
       "fill": 1,
       "fillGradient": 0,
@@ -1069,7 +1169,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1081,7 +1181,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "Prometheus"
+            "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": true,
           "expr": "minio_usage_last_activity_nano_seconds{job=\"$scrape_jobs\"}",
@@ -1162,7 +1262,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1237,7 +1337,7 @@
         "y": 24
       },
       "hiddenSeries": false,
-      "id": 54,
+      "id": 70,
       "legend": {
         "avg": false,
         "current": false,
@@ -1254,7 +1354,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1269,16 +1369,16 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": true,
-          "expr": "sum by (bucket) (minio_bucket_replication_received_bytes{job=\"$scrape_jobs\"})",
+          "expr": "sum by (bucket) (minio_bucket_replication_received_count{job=\"$scrape_jobs\"})",
           "interval": "1m",
           "intervalFactor": 2,
-          "legendFormat": "Data Received [{{bucket}}]",
+          "legendFormat": "Replicated In Objects [{{bucket}}]",
           "refId": "A"
         }
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "Replication Data Received",
+      "title": "Replicated In Objects",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -1293,7 +1393,7 @@
       "yaxes": [
         {
           "$$hashKey": "object:331",
-          "format": "bytes",
+          "format": "short",
           "logBase": 1,
           "show": true
         },
@@ -1329,7 +1429,7 @@
         "y": 24
       },
       "hiddenSeries": false,
-      "id": 55,
+      "id": 71,
       "legend": {
         "avg": false,
         "current": false,
@@ -1346,7 +1446,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1361,16 +1461,16 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": true,
-          "expr": "sum by (bucket) (minio_bucket_replication_sent_bytes{job=\"$scrape_jobs\"})",
+          "expr": "sum by (bucket) (minio_bucket_replication_sent_count{job=\"$scrape_jobs\"})",
           "interval": "1m",
           "intervalFactor": 2,
-          "legendFormat": "Replication Data Sent [{{bucket}}]",
+          "legendFormat": "Replicated Out Objects [{{bucket}}]",
           "refId": "A"
         }
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "Replication Data Sent",
+      "title": "Replicated Out Objects",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -1385,7 +1485,7 @@
       "yaxes": [
         {
           "$$hashKey": "object:331",
-          "format": "bytes",
+          "format": "short",
           "logBase": 1,
           "show": true
         },
@@ -1438,7 +1538,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1530,7 +1630,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1605,7 +1705,7 @@
         "y": 30
       },
       "hiddenSeries": false,
-      "id": 70,
+      "id": 74,
       "legend": {
         "avg": false,
         "current": false,
@@ -1622,7 +1722,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1637,16 +1737,16 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": true,
-          "expr": "sum by (bucket) (minio_bucket_replication_received_count{job=\"$scrape_jobs\"})",
+          "expr": "sum by (bucket) (rate(minio_bucket_replication_last_minute_failed_bytes{job=\"$scrape_jobs\"}[$__rate_interval]))",
           "interval": "1m",
           "intervalFactor": 2,
-          "legendFormat": "Replicated In Objects [{{bucket}}]",
+          "legendFormat": "Last Minute Failed Size [{{bucket}}]",
           "refId": "A"
         }
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "Replicated In Objects",
+      "title": "Last Minute Failed Size",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -1661,7 +1761,7 @@
       "yaxes": [
         {
           "$$hashKey": "object:331",
-          "format": "short",
+          "format": "bytes",
           "logBase": 1,
           "show": true
         },
@@ -1697,7 +1797,7 @@
         "y": 30
       },
       "hiddenSeries": false,
-      "id": 71,
+      "id": 75,
       "legend": {
         "avg": false,
         "current": false,
@@ -1714,7 +1814,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1729,16 +1829,16 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": true,
-          "expr": "sum by (bucket) (minio_bucket_replication_sent_count{job=\"$scrape_jobs\"})",
+          "expr": "sum by (bucket) (minio_bucket_replication_last_minute_failed_count{job=\"$scrape_jobs\"})",
           "interval": "1m",
           "intervalFactor": 2,
-          "legendFormat": "Replicated Out Objects [{{bucket}}]",
+          "legendFormat": "Last Minute Failed Objects [{{bucket}}]",
           "refId": "A"
         }
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "Replicated Out Objects",
+      "title": "Last Minute Failed Objects",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -1806,7 +1906,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1898,7 +1998,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1973,7 +2073,7 @@
         "y": 36
       },
       "hiddenSeries": false,
-      "id": 74,
+      "id": 76,
       "legend": {
         "avg": false,
         "current": false,
@@ -1990,7 +2090,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2005,16 +2105,16 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": true,
-          "expr": "sum by (bucket) (rate(minio_bucket_replication_last_minute_failed_bytes{job=\"$scrape_jobs\"}[$__rate_interval]))",
+          "expr": "sum by (bucket) (minio_bucket_replication_proxied_head_requests_total{job=\"$scrape_jobs\"})",
           "interval": "1m",
           "intervalFactor": 2,
-          "legendFormat": "Last Minute Failed Size [{{bucket}}]",
+          "legendFormat": "{{bucket}}",
           "refId": "A"
         }
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "Last Minute Failed Size",
+      "title": "Total Proxied Head Requests",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -2029,7 +2129,7 @@
       "yaxes": [
         {
           "$$hashKey": "object:331",
-          "format": "bytes",
+          "format": "short",
           "logBase": 1,
           "show": true
         },
@@ -2065,7 +2165,7 @@
         "y": 36
       },
       "hiddenSeries": false,
-      "id": 75,
+      "id": 77,
       "legend": {
         "avg": false,
         "current": false,
@@ -2082,7 +2182,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2097,16 +2197,16 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": true,
-          "expr": "sum by (bucket) (minio_bucket_replication_last_minute_failed_count{job=\"$scrape_jobs\"})",
+          "expr": "minio_bucket_replication_proxied_head_requests_failures{job=\"$scrape_jobs\"}",
           "interval": "1m",
           "intervalFactor": 2,
-          "legendFormat": "Last Minute Failed Objects [{{bucket}}]",
+          "legendFormat": "{{instance}}",
           "refId": "A"
         }
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "Last Minute Failed Objects",
+      "title": "Total Failed Proxied Head Requests",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -2184,7 +2284,7 @@
         "text": {},
         "valueMode": "color"
       },
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "datasource": {
@@ -2227,7 +2327,7 @@
         "y": 42
       },
       "hiddenSeries": false,
-      "id": 76,
+      "id": 80,
       "legend": {
         "avg": false,
         "current": false,
@@ -2244,7 +2344,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2259,7 +2359,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": true,
-          "expr": "sum by (bucket) (minio_bucket_replication_proxied_head_requests_total{job=\"$scrape_jobs\"})",
+          "expr": "sum by (bucket) (minio_bucket_replication_proxied_get_tagging_requests_total{job=\"$scrape_jobs\"})",
           "interval": "1m",
           "intervalFactor": 2,
           "legendFormat": "{{bucket}}",
@@ -2268,7 +2368,7 @@
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "Total Proxied Head Requests",
+      "title": "Total Proxied Get Tag Requests",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -2319,7 +2419,7 @@
         "y": 42
       },
       "hiddenSeries": false,
-      "id": 77,
+      "id": 81,
       "legend": {
         "avg": false,
         "current": false,
@@ -2336,7 +2436,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2351,7 +2451,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": true,
-          "expr": "minio_bucket_replication_proxied_head_requests_failures{job=\"$scrape_jobs\"}",
+          "expr": "minio_bucket_replication_proxied_get_tagging_requests_failures{job=\"$scrape_jobs\"}",
           "interval": "1m",
           "intervalFactor": 2,
           "legendFormat": "{{instance}}",
@@ -2360,7 +2460,7 @@
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "Total Failed Proxied Head Requests",
+      "title": "Total Failed Proxied Get Tag Requests",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -2428,7 +2528,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2520,7 +2620,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2590,12 +2690,12 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 6,
-        "w": 6,
+        "w": 12,
         "x": 0,
         "y": 48
       },
       "hiddenSeries": false,
-      "id": 80,
+      "id": 84,
       "legend": {
         "avg": false,
         "current": false,
@@ -2612,7 +2712,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2627,7 +2727,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": true,
-          "expr": "sum by (bucket) (minio_bucket_replication_proxied_get_tagging_requests_total{job=\"$scrape_jobs\"})",
+          "expr": "sum by (bucket) (minio_bucket_replication_proxied_get_requests_total{job=\"$scrape_jobs\"})",
           "interval": "1m",
           "intervalFactor": 2,
           "legendFormat": "{{bucket}}",
@@ -2636,99 +2736,7 @@
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "Total Proxied Get Tag Requests",
-      "tooltip": {
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:331",
-          "format": "short",
-          "logBase": 1,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:332",
-          "format": "short",
-          "logBase": 1,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
-    },
-    {
-      "aliasColors": {
-        "Replication Errors": "light-red",
-        "Replication Requests": "light-green"
-      },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 6,
-        "y": 48
-      },
-      "hiddenSeries": false,
-      "id": 81,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "10.0.2",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "exemplar": true,
-          "expr": "minio_bucket_replication_proxied_get_tagging_requests_failures{job=\"$scrape_jobs\"}",
-          "interval": "1m",
-          "intervalFactor": 2,
-          "legendFormat": "{{instance}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeRegions": [],
-      "title": "Total Failed Proxied Get Tag Requests",
+      "title": "Total Proxied Get Requests",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -2796,7 +2804,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2888,7 +2896,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2959,98 +2967,6 @@
       "gridPos": {
         "h": 6,
         "w": 12,
-        "x": 0,
-        "y": 54
-      },
-      "hiddenSeries": false,
-      "id": 84,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "10.0.2",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "exemplar": true,
-          "expr": "sum by (bucket) (minio_bucket_replication_proxied_get_requests_total{job=\"$scrape_jobs\"})",
-          "interval": "1m",
-          "intervalFactor": 2,
-          "legendFormat": "{{bucket}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeRegions": [],
-      "title": "Total Proxied Get Requests",
-      "tooltip": {
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:331",
-          "format": "short",
-          "logBase": 1,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:332",
-          "format": "short",
-          "logBase": 1,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
-    },
-    {
-      "aliasColors": {
-        "Replication Errors": "light-red",
-        "Replication Requests": "light-green"
-      },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 6,
-        "w": 12,
         "x": 12,
         "y": 54
       },
@@ -3072,7 +2988,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -3128,7 +3044,7 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 38,
+  "schemaVersion": 34,
   "style": "dark",
   "tags": [
     "minio"

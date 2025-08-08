@@ -70,7 +70,7 @@
   "gnetId": 15306,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1754059445312,
+  "iteration": 1754645291190,
   "links": [
     {
       "icon": "external link",
@@ -675,10 +675,6 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -760,9 +756,9 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": true,
-          "expr": "minio_node_drive_latency_us{job=~\"$scrape_jobs\",server=\"$server\"}",
+          "expr": "sum by (api) (minio_node_drive_latency_us{job=~\"$scrape_jobs\",server=\"$server\"})",
           "interval": "",
-          "legendFormat": "[{{drive}}:{{api}}]",
+          "legendFormat": "[{{api}}]",
           "refId": "B"
         }
       ],
@@ -1047,6 +1043,6 @@
   "timezone": "",
   "title": "MinIO Node Dashboard",
   "uid": "TgmJnnqn2k",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }

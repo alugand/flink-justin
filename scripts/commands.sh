@@ -18,6 +18,10 @@ kafka-topics.sh --bootstrap-server kafka-service.kafka.svc.cluster.local:9092 --
 kafka-configs.sh --bootstrap-server localhost:9092 --alter --topic event-demo --add-config retention.ms=1000
 kafka-configs.sh --bootstrap-server localhost:9092 --alter --topic event-demo --delete-config retention.ms
 
-kubectl port-forward svc/myminio-console 9090 -n minio-tenant
 
+kubectl port-forward svc/myminio-console 9090 -n minio-tenant
+kubectl port-forward svc/myminio-hl 9000 -n minio-tenant
+mc alias set myminio http://localhost:9000 minio minio123 --insecure
+
+mc rm --recursive --force myminio/mybucket
 #minio_cluster_usage_total_bytes{}
