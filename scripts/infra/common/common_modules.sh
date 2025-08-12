@@ -43,9 +43,6 @@ kubectl create namespace kafka
 #helm repo update
 #helm install my-release bitnami/kafka --namespace kafka -f ./values-kafka.yaml
 
-#kafka when using g5k
-kubectl apply -f ./kafka-deployment.yaml
-
 sleep 10
 
 helm repo add flink-operator-repo https://downloads.apache.org/flink/flink-kubernetes-operator-1.12.1/
@@ -61,6 +58,9 @@ helm install --namespace minio-operator --create-namespace operator minio-operat
 kubectl apply -f ./tenant-base.yaml
 kubectl apply -f ./minio-secret.yaml
 
+#kafka when using g5k
+kubectl apply -f ./kafka-deployment.yaml
+
 sleep 30 # sleep for 30 seconds for application of configuration in local-path
 
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
@@ -68,5 +68,3 @@ helm repo update
 helm install --namespace manager --version 30.0.2 prom prometheus-community/kube-prometheus-stack -f ./values-prom.yaml
 
 kubectl apply -f pod-monitor.yaml
-
-#kubectl label service -n minio-tenant myminio-hl metrics=true
