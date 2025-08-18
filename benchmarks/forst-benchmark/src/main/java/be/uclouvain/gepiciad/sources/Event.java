@@ -13,12 +13,12 @@ public class Event {
     public Event() {
     }
 
-    public Event(int key, long eventTime, long sequenceNumber, String payload) {
+    public Event(int key, long eventTime, long sequenceNumber, String payload, long bid) {
         this.key = key;
         this.eventTime = eventTime;
         this.sequenceNumber = sequenceNumber;
         this.payload = payload;
-        this.bid = new Random().nextInt(100);
+        this.bid = bid;
     }
 
     public int getKey() {
@@ -53,12 +53,13 @@ public class Event {
         return key == event.key
                 && eventTime == event.eventTime
                 && sequenceNumber == event.sequenceNumber
+                && bid== event.bid
                 && Objects.equals(payload, event.payload);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(key, eventTime, sequenceNumber, payload);
+        return Objects.hash(key, eventTime, sequenceNumber, payload, bid);
     }
 
     @Override

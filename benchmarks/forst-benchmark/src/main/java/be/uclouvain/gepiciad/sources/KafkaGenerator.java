@@ -28,10 +28,11 @@ public class KafkaGenerator {
         GeneratorFunction<Long, Event> generatorFunction = i -> {
             int key = random.nextInt(Integer.parseInt(pt.get("key-space","100000")));
             long eventTime = Instant.now().toEpochMilli();
+            long bid = random.nextInt(100);
             i++;
             String payload = StringUtils.getRandomString(
                     random, payloadLength, payloadLength, 'A', 'z');
-            return new Event(key, eventTime, i, payload);
+            return new Event(key, eventTime, i, payload, bid);
         };
 
         DataGeneratorSource<Event> dataGeneratorSource =
