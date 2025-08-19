@@ -57,10 +57,7 @@ public class WriteOnly {
 
         @Override
         public void flatMap(Event event, Collector<String> out) throws Exception {
-            valueState.asyncValue().thenAccept(currentValue -> {
-                    valueState.asyncUpdate(event.getPayload());
-                    out.collect(event.getPayload());
-            });
+            valueState.asyncUpdate(event.getPayload());
         }
 
 

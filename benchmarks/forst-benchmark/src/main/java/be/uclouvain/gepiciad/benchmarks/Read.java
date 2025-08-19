@@ -60,6 +60,9 @@ public class Read {
             valueState.asyncValue().thenAccept(currentValue -> {
                 if (currentValue == null) {
                     valueState.asyncUpdate(event.getPayload());
+                } else {
+                    String pay = currentValue;
+                    out.collect(pay);
                 }
             });
         }
