@@ -59,9 +59,6 @@ public class Update {
         @Override
         public void flatMap(Event event, Collector<String> out) throws Exception {
             valueState.asyncValue().thenAccept(currentValue -> {
-                if (currentValue != null) {
-                    out.collect(currentValue);
-                }
                 valueState.asyncUpdate(event.getPayload());
             });
         }
